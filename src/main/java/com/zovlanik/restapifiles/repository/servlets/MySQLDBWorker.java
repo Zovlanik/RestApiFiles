@@ -1,4 +1,4 @@
-package com.zovlanik.restapifiles.servlets;
+package com.zovlanik.restapifiles.repository.servlets;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
