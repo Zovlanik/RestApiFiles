@@ -1,13 +1,16 @@
 package com.zovlanik.restapifiles.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.crypto.Data;
 import java.util.Date;
 
+
 public class File {
-    String filename;
-    Date creationDate;
-    Date deletionDate;
-    FileStatus status;
+    private String filename;
+    private Date creationDate;
+    private Date deletionDate;
+    private FileStatus status;
 
     public File() {
     }

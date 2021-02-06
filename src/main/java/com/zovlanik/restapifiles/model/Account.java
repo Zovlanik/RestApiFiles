@@ -1,9 +1,19 @@
 package com.zovlanik.restapifiles.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="account")
 public class Account {
-    int id;
-    String name;
-    AccountStatus accountStatus;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
+    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_status")
+    private AccountStatus accountStatus;
 
     public Account(int id, String name, AccountStatus accountStatus) {
         this.id = id;

@@ -1,13 +1,22 @@
 package com.zovlanik.restapifiles.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name="users")
 public class User {
-    int id;
-    String username;
-    Account account;
-    List<File> files;
-    List<Event> events;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "username")
+    private String username;
+    @OneToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
+    private List<File> files;
+    private List<Event> events;
 
     public User() {
     }
