@@ -1,62 +1,61 @@
 package com.zovlanik.restapifiles.repository.hibernate;
 
 import com.zovlanik.restapifiles.model.Account;
-import com.zovlanik.restapifiles.repository.AccountRepository;
+import com.zovlanik.restapifiles.model.File;
+import com.zovlanik.restapifiles.repository.FileRepository;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HibernateAccountRepositoryImpl implements AccountRepository {
-
+public class HibernateFileRepositoryImpl implements FileRepository {
     @Override
-    public Account getById(Integer id) {
-        Account account = null;
+    public File getById(Integer id) {
+        File file = null;
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        account = session.get(Account.class, id);
+        file = session.get(File.class, id);
         session.getTransaction().commit();
 
-        return account;
+        return file;
     }
 
     @Override
-    public List<Account> getAll() {
-        List<Account> la = new ArrayList<>();
+    public List<File> getAll() {
+        List<File> lf = new ArrayList<>();
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query query = session.createQuery("FROM Account order by id");
-
-        la = query.list();
+        Query query = session.createQuery("FROM File order by id");
         session.getTransaction().commit();
-        return la;
+        lf = query.list();
+        return lf;
     }
 
     @Override
-    public void create(Account account) {
+    public void create(File file) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.save(account);
+        session.save(file);
         session.getTransaction().commit();
     }
 
     @Override
-    public void update(Account account) {
+    public void update(File file) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.update(account);
+        session.update(file);
         session.getTransaction().commit();
     }
 
     @Override
     public void deleteById(Integer id) {
-        Account account = getById(id); //да, костыль
+        File file = getById(id); //да, костыль
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.delete(account);
+        session.delete(file);
         session.getTransaction().commit();
     }
 }

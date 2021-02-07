@@ -1,62 +1,62 @@
 package com.zovlanik.restapifiles.repository.hibernate;
 
-import com.zovlanik.restapifiles.model.Account;
-import com.zovlanik.restapifiles.repository.AccountRepository;
+import com.zovlanik.restapifiles.model.User;
+import com.zovlanik.restapifiles.repository.UserRepository;
 import org.hibernate.Session;
+import org.hibernate.engine.internal.Collections;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class HibernateAccountRepositoryImpl implements AccountRepository {
-
+public class HibernateUserRepositoryImpl implements UserRepository {
     @Override
-    public Account getById(Integer id) {
-        Account account = null;
+    public User getById(Integer id) {
+        User user = null;
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        account = session.get(Account.class, id);
+        user = session.get(User.class, id);
         session.getTransaction().commit();
 
-        return account;
+        return user;
     }
 
     @Override
-    public List<Account> getAll() {
-        List<Account> la = new ArrayList<>();
+    public List<User> getAll() {
+        List<User> lu = new ArrayList<>();
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query query = session.createQuery("FROM Account order by id");
-
-        la = query.list();
+        Query query = session.createQuery("FROM User order by id");
+        lu = query.list();
         session.getTransaction().commit();
-        return la;
+        return lu;
     }
 
     @Override
-    public void create(Account account) {
+    public void create(User user) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.save(account);
+        session.save(user);
         session.getTransaction().commit();
     }
 
     @Override
-    public void update(Account account) {
+    public void update(User user) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.update(account);
+        session.update(user);
         session.getTransaction().commit();
     }
 
     @Override
     public void deleteById(Integer id) {
-        Account account = getById(id); //да, костыль
+        User user = getById(id); //да, костыль
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.delete(account);
+        session.delete(user);
         session.getTransaction().commit();
     }
 }

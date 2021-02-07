@@ -3,7 +3,7 @@ package com.zovlanik.restapifiles.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="account")
+@Table(name="accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,10 @@ public class Account {
         this.id = id;
         this.name = name;
         this.accountStatus = accountStatus;
+    }
+
+    public Account() {
+
     }
 
     public int getId() {

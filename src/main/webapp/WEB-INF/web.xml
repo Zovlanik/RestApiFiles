@@ -8,17 +8,27 @@
     <!--Servlets-->
     <servlet>
         <servlet-name>SimpleServlet</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.repository.servlets.SimpleServlet</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.SimpleServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>GetAllUsers</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.repository.servlets.GetAllUsers</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.GetAllUsers</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>CreateUser</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.repository.servlets.CreateUser</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.CreateUser</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>GetAllAccounts</servlet-name>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.GetAllAccounts</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CreateAccount</servlet-name>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.CreateAccount</servlet-class>
     </servlet>
 
     <!--Servlet-mappings-->
@@ -35,6 +45,16 @@
     <servlet-mapping>
         <servlet-name>CreateUser</servlet-name>
         <url-pattern>/CreateUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>GetAllAccounts</servlet-name>
+        <url-pattern>/GetAllAccounts</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateAccount</servlet-name>
+        <url-pattern>/CreateAccount</url-pattern>
     </servlet-mapping>
 
 </web-app>

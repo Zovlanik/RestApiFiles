@@ -1,4 +1,4 @@
-package com.zovlanik.restapifiles.repository.servlets;
+package com.zovlanik.restapifiles.view.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

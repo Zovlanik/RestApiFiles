@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS users (
-    user_id     int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name        varchar(200) DEFAULT NULL
-);
+CREATE TABLE `restapi`.`users` (
+                                   `id` INT NOT NULL AUTO_INCREMENT,
+                                   `username` VARCHAR(100) NULL,
+                                   `id_account` INT NULL,
+                                   PRIMARY KEY (`id`));

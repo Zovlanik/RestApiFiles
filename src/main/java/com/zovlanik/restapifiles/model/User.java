@@ -15,18 +15,23 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id_account")
     private Account account;
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(name = "users_files",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id"))
     private List<File> files;
+
+    @OneToMany
+    @JoinColumn(name="user_id")
     private List<Event> events;
 
     public User() {
     }
 
-    public User(int id, String username, Account account, List<File> files, List<Event> events) {
-        this.id = id;
+    public User(String username, Account account) {
         this.username = username;
         this.account = account;
-        this.files = files;
-        this.events = events;
+
     }
 
     public int getId() {
