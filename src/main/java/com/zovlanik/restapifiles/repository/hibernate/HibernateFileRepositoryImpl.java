@@ -29,8 +29,8 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM File order by id");
-        session.getTransaction().commit();
         lf = query.list();
+        session.getTransaction().commit();
         return lf;
     }
 

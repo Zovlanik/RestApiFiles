@@ -12,7 +12,7 @@ public class Account {
     @Column(name = "name")
     private String name;
     @Enumerated(EnumType.STRING)
-    @Column(name = "account_status")
+    @Column(name = "account_status", columnDefinition = "ACTIVE")
     private AccountStatus accountStatus;
 
     public Account(int id, String name, AccountStatus accountStatus) {

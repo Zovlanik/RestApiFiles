@@ -20,7 +20,11 @@ public class File {
     @Enumerated(EnumType.STRING)
     @Column(name = "file_status")
     private FileStatus status;
-    @ManyToMany(mappedBy = "files")
+//    @ManyToMany(mappedBy = "files") //уточнить у Жени как именно это должно происходить
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(name = "users_files",
+        joinColumns = @JoinColumn(name = "file_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     public File() {

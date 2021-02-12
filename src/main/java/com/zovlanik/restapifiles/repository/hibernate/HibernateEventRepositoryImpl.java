@@ -28,8 +28,9 @@ public class HibernateEventRepositoryImpl implements EventRepository {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("FROM Event order by id");
-        session.getTransaction().commit();
+
         le = query.list();
+        session.getTransaction().commit();
         return le;
     }
 

@@ -1,33 +1,35 @@
 package com.zovlanik.restapifiles.view.servlets;
 
 import com.google.gson.Gson;
-import com.zovlanik.restapifiles.model.User;
-import com.zovlanik.restapifiles.repository.UserRepository;
-import com.zovlanik.restapifiles.repository.hibernate.HibernateUserRepositoryImpl;
+import com.zovlanik.restapifiles.model.File;
+import com.zovlanik.restapifiles.model.FileStatus;
+import com.zovlanik.restapifiles.repository.FileRepository;
+import com.zovlanik.restapifiles.repository.hibernate.HibernateFileRepositoryImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
-public class users extends HttpServlet {
-    private final UserRepository userRepository = new HibernateUserRepositoryImpl();
+public class files extends HttpServlet {
+    private final FileRepository fileRepository = new HibernateFileRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuffer urlString = request.getRequestURL();
 
-        Gson gsonUser = new Gson();
+        Gson gsonFile = new Gson();
         int lastIndexOfSlash = urlString.lastIndexOf("/");
         String whatToReturn = urlString.substring(lastIndexOfSlash + 1);
 
-        if (whatToReturn.equalsIgnoreCase("users")) {
-            response.getWriter().println(gsonUser.toJson(userRepository.getAll()));
+        if (whatToReturn.equalsIgnoreCase("files")) {
+            response.getWriter().println(gsonFile.toJson(fileRepository.getAll()));
 
         } else {
             try {
                 int userId = Integer.valueOf(whatToReturn);
-                response.getWriter().println(gsonUser.toJson(userRepository.getById(userId)));
+                response.getWriter().println(gsonFile.toJson(fileRepository.getById(userId)));
             } catch (Exception ex) {
                 ex.printStackTrace();
                 response.getWriter().println("Wrong type of parameter ID");
@@ -40,9 +42,16 @@ public class users extends HttpServlet {
         response.setContentType("application/json");
 
         try {
-            User newUser = new Gson().fromJson(request.getReader(), User.class);
-            userRepository.create(newUser);
-            response.getWriter().println("User with name = " + newUser.getUsername() + " was successfully created.");
+            File newFile = new Gson().fromJson(request.getReader(), File.class);
+            if(newFile.getCreationDate() == null) {
+                newFile.setCreationDate(new Date(System.currentTimeMillis()));
+            }
+            if(newFile.getStatus() == null){
+                newFile.setStatus(FileStatus.ACTIVE);
+            }
+
+            fileRepository.create(newFile);
+            response.getWriter().println("File with filename = " + newFile.getFilename() + " was successfully created.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -56,11 +65,11 @@ public class users extends HttpServlet {
 
         try {
             int lastIndexOfSlash = urlString.lastIndexOf("/");
-            int userId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
-            User userToChange = new Gson().fromJson(request.getReader(), User.class);
-            userToChange.setId(userId);
-            userRepository.update(userToChange);
-            response.getWriter().println("User was successfully changed.");
+            int fileId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
+            File fileToChange = new Gson().fromJson(request.getReader(), File.class);
+            fileToChange.setId(fileId);
+            fileRepository.update(fileToChange);
+            response.getWriter().println("File was successfully changed.");
         } catch (Exception ex) {
             ex.printStackTrace();
 
@@ -74,13 +83,12 @@ public class users extends HttpServlet {
 
 
         try {
-            int userId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
-            userRepository.deleteById(userId);
-            response.getWriter().println("User with id = " + userId + " was successfully deleted.");
+            int fileId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
+            fileRepository.deleteById(fileId);
+            response.getWriter().println("File with id = " + fileId + " was successfully deleted.");
         } catch (Exception ex) {
             ex.printStackTrace();
             response.getWriter().println("Wrong type of parameter ID");
         }
     }
-
 }

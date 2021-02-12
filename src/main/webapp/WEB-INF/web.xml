@@ -11,29 +11,25 @@
         <servlet-class>com.zovlanik.restapifiles.view.servlets.SimpleServlet</servlet-class>
     </servlet>
 
-    <servlet>
-        <servlet-name>GetAllUsers</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.GetAllUsers</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>CreateUser</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.CreateUser</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>GetAllAccounts</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.GetAllAccounts</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>CreateAccount</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.CreateAccount</servlet-class>
-    </servlet>
 
     <servlet>
         <servlet-name>accounts</servlet-name>
         <servlet-class>com.zovlanik.restapifiles.view.servlets.accounts</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>users</servlet-name>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.users</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>files</servlet-name>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.files</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>events</servlet-name>
+        <servlet-class>com.zovlanik.restapifiles.view.servlets.events</servlet-class>
     </servlet>
 
     <!--Servlet-mappings-->
@@ -42,29 +38,24 @@
         <url-pattern>/SimpleServlet</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>GetAllUsers</servlet-name>
-        <url-pattern>/GetAllUsers</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>CreateUser</servlet-name>
-        <url-pattern>/CreateUser</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>GetAllAccounts</servlet-name>
-        <url-pattern>/GetAllAccounts</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>CreateAccount</servlet-name>
-        <url-pattern>/CreateAccount</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>accounts</servlet-name>
-        <url-pattern>/accounts</url-pattern>
+        <url-pattern>/api/v1/accounts/*</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>users</servlet-name>
+        <url-pattern>/api/v1/users/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>files</servlet-name>
+        <url-pattern>/api/v1/files/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>events</servlet-name>
+        <url-pattern>/api/v1/events/*</url-pattern>
+    </servlet-mapping>
 </web-app>

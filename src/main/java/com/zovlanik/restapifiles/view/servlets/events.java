@@ -1,33 +1,34 @@
 package com.zovlanik.restapifiles.view.servlets;
 
 import com.google.gson.Gson;
-import com.zovlanik.restapifiles.model.User;
-import com.zovlanik.restapifiles.repository.UserRepository;
-import com.zovlanik.restapifiles.repository.hibernate.HibernateUserRepositoryImpl;
+import com.zovlanik.restapifiles.model.Event;
+import com.zovlanik.restapifiles.repository.EventRepository;
+import com.zovlanik.restapifiles.repository.hibernate.HibernateEventRepositoryImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
-public class users extends HttpServlet {
-    private final UserRepository userRepository = new HibernateUserRepositoryImpl();
+public class events extends HttpServlet {
+    private final EventRepository eventRepository = new HibernateEventRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuffer urlString = request.getRequestURL();
 
-        Gson gsonUser = new Gson();
+        Gson gsonEvent = new Gson();
         int lastIndexOfSlash = urlString.lastIndexOf("/");
         String whatToReturn = urlString.substring(lastIndexOfSlash + 1);
 
-        if (whatToReturn.equalsIgnoreCase("users")) {
-            response.getWriter().println(gsonUser.toJson(userRepository.getAll()));
+        if (whatToReturn.equalsIgnoreCase("events")) {
+            response.getWriter().println(gsonEvent.toJson(eventRepository.getAll()));
 
         } else {
             try {
-                int userId = Integer.valueOf(whatToReturn);
-                response.getWriter().println(gsonUser.toJson(userRepository.getById(userId)));
+                int eventId = Integer.valueOf(whatToReturn);
+                response.getWriter().println(gsonEvent.toJson(eventRepository.getById(eventId)));
             } catch (Exception ex) {
                 ex.printStackTrace();
                 response.getWriter().println("Wrong type of parameter ID");
@@ -40,9 +41,12 @@ public class users extends HttpServlet {
         response.setContentType("application/json");
 
         try {
-            User newUser = new Gson().fromJson(request.getReader(), User.class);
-            userRepository.create(newUser);
-            response.getWriter().println("User with name = " + newUser.getUsername() + " was successfully created.");
+            Event newEvent = new Gson().fromJson(request.getReader(), Event.class);
+            if (newEvent.getDate() == null){
+                newEvent.setDate(new Date(System.currentTimeMillis()));
+            }
+            eventRepository.create(newEvent);
+            response.getWriter().println("Event with id = " + newEvent.getId() + " was successfully created.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -56,11 +60,11 @@ public class users extends HttpServlet {
 
         try {
             int lastIndexOfSlash = urlString.lastIndexOf("/");
-            int userId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
-            User userToChange = new Gson().fromJson(request.getReader(), User.class);
-            userToChange.setId(userId);
-            userRepository.update(userToChange);
-            response.getWriter().println("User was successfully changed.");
+            int eventId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
+            Event eventToChange = new Gson().fromJson(request.getReader(), Event.class);
+            eventToChange.setId(eventId);
+            eventRepository.update(eventToChange);
+            response.getWriter().println("Event was successfully changed.");
         } catch (Exception ex) {
             ex.printStackTrace();
 
@@ -74,13 +78,12 @@ public class users extends HttpServlet {
 
 
         try {
-            int userId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
-            userRepository.deleteById(userId);
-            response.getWriter().println("User with id = " + userId + " was successfully deleted.");
+            int eventId = Integer.parseInt(urlString.substring(lastIndexOfSlash + 1));
+            eventRepository.deleteById(eventId);
+            response.getWriter().println("Event with id = " + eventId + " was successfully deleted.");
         } catch (Exception ex) {
             ex.printStackTrace();
             response.getWriter().println("Wrong type of parameter ID");
         }
     }
-
 }

@@ -15,6 +15,7 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id_account")
     private Account account;
+
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(name = "users_files",
             joinColumns = @JoinColumn(name = "user_id"),
