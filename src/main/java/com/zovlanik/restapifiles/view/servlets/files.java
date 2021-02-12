@@ -1,6 +1,8 @@
 package com.zovlanik.restapifiles.view.servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.zovlanik.restapifiles.model.Event;
 import com.zovlanik.restapifiles.model.File;
 import com.zovlanik.restapifiles.model.FileStatus;
 import com.zovlanik.restapifiles.repository.FileRepository;
@@ -10,8 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class files extends HttpServlet {
     private final FileRepository fileRepository = new HibernateFileRepositoryImpl();
@@ -39,10 +47,20 @@ public class files extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/plain");
 
+        Collection<Part> asd = request.getParts();
+        for (Part part : asd){
+            response.getWriter().println(part);
+        }
         try {
+            /*
             File newFile = new Gson().fromJson(request.getReader(), File.class);
+            //String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            response.getWriter().println();
+
+            newFile.setFilename(request.getParameter("filename"));
+            newFile.setUser_id(Integer.parseInt(request.getParameter("user_id")));
             if(newFile.getCreationDate() == null) {
                 newFile.setCreationDate(new Date(System.currentTimeMillis()));
             }
@@ -52,6 +70,8 @@ public class files extends HttpServlet {
 
             fileRepository.create(newFile);
             response.getWriter().println("File with filename = " + newFile.getFilename() + " was successfully created.");
+            */
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

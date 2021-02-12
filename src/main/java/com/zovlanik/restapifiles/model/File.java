@@ -11,6 +11,10 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Column(name = "user_id")
+    private int user_id;
+
     @Column(name = "filename")
     private String filename;
     @Column(name = "creationDate")
@@ -20,12 +24,7 @@ public class File {
     @Enumerated(EnumType.STRING)
     @Column(name = "file_status")
     private FileStatus status;
-//    @ManyToMany(mappedBy = "files") //уточнить у Жени как именно это должно происходить
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(name = "users_files",
-        joinColumns = @JoinColumn(name = "file_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+
 
     public File() {
     }
@@ -74,5 +73,13 @@ public class File {
 
     public void setStatus(FileStatus status) {
         this.status = status;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }
