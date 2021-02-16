@@ -1,4 +1,4 @@
-package com.zovlanik.restapifiles.view.servlets;
+package com.zovlanik.restapifiles.rest;
 
 import com.google.gson.Gson;
 import com.zovlanik.restapifiles.model.Account;

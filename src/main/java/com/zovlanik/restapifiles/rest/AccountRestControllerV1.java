@@ -1,6 +1,7 @@
-package com.zovlanik.restapifiles.view.servlets;
+package com.zovlanik.restapifiles.rest;
 
 import com.google.gson.Gson;
+import com.zovlanik.restapifiles.dto.AccountDTO;
 import com.zovlanik.restapifiles.model.Account;
 import com.zovlanik.restapifiles.repository.AccountRepository;
 import com.zovlanik.restapifiles.repository.hibernate.HibernateAccountRepositoryImpl;
@@ -10,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
-public class accounts extends HttpServlet {
+public class AccountRestControllerV1 extends HttpServlet {
     private final AccountRepository accountRepository = new HibernateAccountRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,12 +24,17 @@ public class accounts extends HttpServlet {
         String whatToReturn = urlString.substring(lastIndexOfSlash + 1);
 
         if (whatToReturn.equalsIgnoreCase("accounts")){
-            response.getWriter().println(gsonAccount.toJson(accountRepository.getAll()));
+            response.getWriter().println(gsonAccount.toJson(
+                    accountRepository.getAll().stream()
+                    .map(account -> {return new AccountDTO(account.getId(),account.getName());})
+                    .collect(Collectors.toList())));
 
         }else{
             try{
                 int accountId = Integer.valueOf(whatToReturn);
-                response.getWriter().println(gsonAccount.toJson(accountRepository.getById(accountId)));
+                Account account = accountRepository.getById(accountId);
+                AccountDTO accountDTO = AccountDTO.fromAccount(account);
+                response.getWriter().println(gsonAccount.toJson(accountDTO));
             }catch(Exception ex){
                 ex.printStackTrace();
                 response.getWriter().println("Wrong type of parameter ID");

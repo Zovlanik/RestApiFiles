@@ -1,4 +1,4 @@
-package com.zovlanik.restapifiles.view.servlets;
+package com.zovlanik.restapifiles.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -9,6 +9,7 @@ import com.zovlanik.restapifiles.repository.FileRepository;
 import com.zovlanik.restapifiles.repository.hibernate.HibernateFileRepositoryImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +20,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class files extends HttpServlet {
+@MultipartConfig
+public class FileRestControllerV1 extends HttpServlet {
     private final FileRepository fileRepository = new HibernateFileRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,35 +50,29 @@ public class files extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
+        response.setContentType("multipart/mixed");
 
-        Collection<Part> asd = request.getParts();
-        for (Part part : asd){
-            response.getWriter().println(part);
-        }
-        try {
-            /*
-            File newFile = new Gson().fromJson(request.getReader(), File.class);
-            //String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-            response.getWriter().println();
+        File file = new File();
+        String fileName = extractFileName(request.getPart("filename"));
 
-            newFile.setFilename(request.getParameter("filename"));
-            newFile.setUser_id(Integer.parseInt(request.getParameter("user_id")));
-            if(newFile.getCreationDate() == null) {
-                newFile.setCreationDate(new Date(System.currentTimeMillis()));
+        file.setFilename(fileName);
+        file.setCreationDate(new Date());
+        file.setStatus(FileStatus.ACTIVE);
+
+        fileRepository.create(file);
+        response.getWriter().println(new Gson().toJson(file, File.class));
+
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length()-1);
             }
-            if(newFile.getStatus() == null){
-                newFile.setStatus(FileStatus.ACTIVE);
-            }
-
-            fileRepository.create(newFile);
-            response.getWriter().println("File with filename = " + newFile.getFilename() + " was successfully created.");
-            */
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
+        return "";
     }
 
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
