@@ -1,6 +1,8 @@
-package com.zovlanik.restapifiles.view.servlets;
+package com.zovlanik.restapifiles.rest;
 
 import com.google.gson.Gson;
+import com.zovlanik.restapifiles.dto.AccountDTO;
+import com.zovlanik.restapifiles.dto.EventDTO;
 import com.zovlanik.restapifiles.model.Event;
 import com.zovlanik.restapifiles.repository.EventRepository;
 import com.zovlanik.restapifiles.repository.hibernate.HibernateEventRepositoryImpl;
@@ -11,8 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.stream.Collectors;
 
-public class events extends HttpServlet {
+public class EventRestControllerV1 extends HttpServlet {
     private final EventRepository eventRepository = new HibernateEventRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,12 +26,16 @@ public class events extends HttpServlet {
         String whatToReturn = urlString.substring(lastIndexOfSlash + 1);
 
         if (whatToReturn.equalsIgnoreCase("events")) {
-            response.getWriter().println(gsonEvent.toJson(eventRepository.getAll()));
+            response.getWriter().println(gsonEvent.toJson(eventRepository.getAll().stream()
+                    .map(event -> {return new EventDTO(event.getUser_id(),event.getDate());})
+                    .collect(Collectors.toList())));
 
         } else {
             try {
                 int eventId = Integer.valueOf(whatToReturn);
-                response.getWriter().println(gsonEvent.toJson(eventRepository.getById(eventId)));
+                Event event = eventRepository.getById(eventId);
+                EventDTO eventDTO = new EventDTO(event.getUser_id(),event.getDate());
+                response.getWriter().println(gsonEvent.toJson(eventDTO));
             } catch (Exception ex) {
                 ex.printStackTrace();
                 response.getWriter().println("Wrong type of parameter ID");

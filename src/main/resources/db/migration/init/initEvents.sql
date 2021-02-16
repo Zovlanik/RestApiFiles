@@ -1,4 +1,4 @@
-CREATE TABLE `restapi`.`events` (
+CREATE TABLE IF NOT EXISTS `restapi`.`events` (
                                     `id` INT NOT NULL AUTO_INCREMENT,
                                     `user_id` INT,
                                     `date` TIMESTAMP NULL,

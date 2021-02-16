@@ -8,28 +8,28 @@
     <!--Servlets-->
     <servlet>
         <servlet-name>SimpleServlet</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.SimpleServlet</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.rest.SimpleServlet</servlet-class>
     </servlet>
 
 
     <servlet>
         <servlet-name>accounts</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.accounts</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.rest.AccountRestControllerV1</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>users</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.users</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.rest.UserRestControllerV1</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>files</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.files</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.rest.FileRestControllerV1</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>events</servlet-name>
-        <servlet-class>com.zovlanik.restapifiles.view.servlets.events</servlet-class>
+        <servlet-class>com.zovlanik.restapifiles.rest.EventRestControllerV1</servlet-class>
     </servlet>
 
     <!--Servlet-mappings-->

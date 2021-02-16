@@ -1,4 +1,4 @@
-package com.zovlanik.restapifiles.view.servlets;
+package com.zovlanik.restapifiles.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @MultipartConfig
-public class files extends HttpServlet {
+public class FileRestControllerV1 extends HttpServlet {
     private final FileRepository fileRepository = new HibernateFileRepositoryImpl();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

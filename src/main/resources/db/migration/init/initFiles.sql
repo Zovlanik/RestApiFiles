@@ -1,4 +1,4 @@
-CREATE TABLE `restapi`.`files` (
+CREATE TABLE IF NOT EXISTS `restapi`.`files` (
                                    `id` INT NOT NULL AUTO_INCREMENT,
                                    `filename` VARCHAR(250) NULL,
                                    `creationDate` TIMESTAMP NULL,
