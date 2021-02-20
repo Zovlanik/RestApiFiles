@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RestApiFiles:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>RestApiFiles</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="RestApiFiles.war">
+      <element id="artifact" artifact-name="RestApiFiles:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -30,7 +30,7 @@
             <artifactId>liquibase-maven-plugin</artifactId>
             <version>4.3.1</version>
             <configuration>
-                <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                <propertyFile>src/main/resources/liquibase.properties</propertyFile>
                 <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
             </configuration>
             <executions>
