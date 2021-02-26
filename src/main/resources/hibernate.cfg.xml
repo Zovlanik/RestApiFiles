@@ -5,10 +5,11 @@
 <hibernate-configuration>
   <session-factory>
       <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-     <property name="connection.url">jdbc:mysql://localhost:3306/restapi</property>
+<!--     <property name="connection.url">jdbc:mysql://localhost:3306/restapi</property>-->
+     <property name="connection.url">jdbc:mysql://eu-cdbr-west-03.cleardb.net:3306/heroku_6d8c6da34241ee0?reconnect=true</property>
      <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-     <property name="connection.username">root</property>
-     <property name="connection.password">root</property>
+     <property name="connection.username">b7fa19f2c84911</property>
+     <property name="connection.password">7dc00950</property>
      <property name="hibernate.connection.characterEncoding">utf8</property>
       <property name="hibernate.current_session_context_class">thread</property>
       <property name="hibernate.enable_lazy_load_no_trans">true</property>
